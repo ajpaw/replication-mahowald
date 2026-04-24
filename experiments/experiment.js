@@ -23,6 +23,16 @@ function getConditionForItem(itemIndex, list) {
   return conditionNames[(itemIndex + list) % 3];
 }
 
+const subject_id = jsPsych.randomization.randomID(10);
+const filename = `${subject_id}.csv`;
+
+const save_data = {
+                type: jsPsychPipe,
+                action: "save",
+                experiment_id: "aytF4pjDilZI",
+                filename: filename,
+                data_string: ()=>jsPsych.data.get().csv()
+              };
 // --- Build self-paced reading trials for a single text ---
 function buildReadingTrials(item, conditionData, itemId, condition, isCritical) {
   const trials = [];
@@ -282,5 +292,5 @@ const timeline = [
   ...secondBlock,
   debrief
 ];
-
+timeline.push(save_data)
 jsPsych.run(timeline);
