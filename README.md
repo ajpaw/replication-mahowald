@@ -1,7 +1,7 @@
 ---
 title: "Replication of the behavioral study from Mahowald et al (2013, Cognition) - Info/information theory"
 author: "Arjun Pawar (arjun7@stanford.edu)"
-date: "`r format(Sys.time(), '%B %d, %Y')`"
+#date: "`r format(Sys.time(), '%B %d, %Y')`"
 format:
   html:
     toc: true
