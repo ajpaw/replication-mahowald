@@ -1,8 +1,3 @@
-//import { initJsPsych } from "jspsych";
-//import jsPsychHtmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
-//import jsPsychSurveyText from "@jspsych/plugin-survey-text";
-//import jsPsychPipe from "@jspsych-contrib/plugin-pipe";
-//import { STIMULI } from "./longshort-stims.js";
 
 const jsPsych = initJsPsych({
   on_finish: () => {
@@ -22,7 +17,7 @@ const save_data = {
               };
 
 // -------------------- PARAMETERS --------------------
-const N_PER_CELL = 5;                 // 5 per each of 4 types
+const N_PER_CELL = 3;                 // x per each of 4 types
 const COMPREHENSION_RATE = 0.30;      // “every once in a while”
 const HIGH_LOAD_N_DIGITS = 6;         // number length for high load
 const LOW_LOAD_N_DIGITS = 0;          // low load: no number screen
@@ -139,11 +134,16 @@ const load_number_screen = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: () => {
     const t = jsPsych.evaluateTimelineVariable("t");
-    return `<div style="font-size: 48px; font-weight: 700;">${t.load_number}</div>
-            <p>Try to remember this number.</p>`;
+    return `
+      <div style="max-width: 900px;">
+      <p>Memorize this number.</p>
+        <div style="font-size: 48px; font-weight: 700;">${t.load_number}</div>
+        
+      </div>
+    `;
   },
   choices: "NO_KEYS",
-  trial_duration: 2000,
+  trial_duration: 2500,
   data: () => {
     const t = jsPsych.evaluateTimelineVariable("t");
     return {
@@ -155,10 +155,7 @@ const load_number_screen = {
       long_word: t.long_word
     };
   },
-  //conditional_function: () => {
-  //  const t = jsPsych.evaluateTimelineVariable("t");
-  //  return t.load === "high";
-  //}
+  
 };
 
 const load_number_high_load_only = {
@@ -175,6 +172,7 @@ const completion_trial = {
     const t = jsPsych.evaluateTimelineVariable("t");
     return `
       <div style="max-width: 900px;">
+        <p style="margin:0 0 12px; font-size: 14px; color: #1a5fb4; font-weight: 500;">What sounds more natural?</p>
         <p style="font-size: 26px; line-height: 1.35;">${t.sentence}</p>
         <div style="display:flex; justify-content:space-between; gap: 30px; margin-top: 25px;">
           <div style="flex:1; border:1px solid #ccc; padding:16px; border-radius:10px;">
@@ -217,7 +215,7 @@ const completion_trial = {
 const load_recall = {
   type: jsPsychSurveyText,
   questions: [
-    { prompt: "Type the number you saw:", name: "recall", required: true }
+    { prompt: "Type the number you saw and press ENTER", name: "recall", required: true }
   ],
   data: () => {
     const t = jsPsych.evaluateTimelineVariable("t");
@@ -236,10 +234,7 @@ const load_recall = {
     data.recalled_number = String(resp).trim();
     data.load_correct = data.recalled_number === String(t.load_number);
   },
-  //conditional_function: () => {
-  //  const t = jsPsych.evaluateTimelineVariable("t");
-  //  return t.load === "high";
-  //}
+
 };
 
 const load_recall_high_load_only = {
@@ -277,13 +272,8 @@ const comprehension_trial = {
   },
   on_finish: (data) => {
     data.comp_answer = data.response === "f" ? "yes" : "no";
-    // If you later add an answer key column, you can score accuracy here.
   },
-  //conditional_function: () => {
-  //  const t = jsPsych.evaluateTimelineVariable("t");
-    // only ask if flagged AND question exists
-  //  return t.ask_comprehension && t.comprehension_question.trim().length > 0;
-  //}
+
 };
 const comprehension_if_flagged = {
     timeline: [comprehension_trial],
@@ -308,7 +298,6 @@ const trial_procedure = {
   randomize_order: true
 };
 
-// Optional debrief
 const debrief = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: () => {
@@ -320,9 +309,8 @@ const debrief = {
       : 0;
     return `
       <div style="max-width: 800px;">
-        <h2>Done</h2>
-        <p>You completed ${n} choice trials (${nHigh} with memory load).</p>
-        <p>Memory recall accuracy: ${recallPct}%</p>
+        <h2>Done!</h2>
+        <p>Thank you for your participation!</p>
         <p>Press <strong>Space</strong> to finish.</p>
       </div>
     `;
