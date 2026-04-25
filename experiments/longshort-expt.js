@@ -318,4 +318,4 @@ const debrief = {
   choices: [" "]
 };
 
-jsPsych.run([welcome, trial_procedure, debrief]);
+jsPsych.run([welcome, trial_procedure, debrief, save_data]);
