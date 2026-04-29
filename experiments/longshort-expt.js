@@ -192,7 +192,7 @@ const welcome = {
       <p>On some trials, you will briefly see a number and will later be asked to type it.</p>
       <p>Press <strong>Space</strong> to begin.</p>
       <p style="font-size: 14px; line-height: 1.4; color: #555; margin-top: 1em;">
-        Note to Bran/whoever is reading this: The prototype is ready to run with stims constructed from scratch. Still working on writing up some comprehension check questions so they might not appear, but there is code to make them appear randomly! Might also make a few refinements (instructions/time durations).
+        Note to Bran/whoever is reading this: The prototype is ready to run with stims constructed from scratch. Might also make a few refinements (instructions/time durations)!
       </p>
     </div>
   `,
