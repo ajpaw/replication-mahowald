@@ -193,7 +193,7 @@ const completion_trial = {
     const t = jsPsych.evaluateTimelineVariable("t");
     return `
       <div style="max-width: 900px;">
-        <p style="margin:0 0 12px; font-size: 14px; color: #1a5fb4; font-weight: 500;">What sounds more natural?</p>
+        <p style="margin:0 0 12px; font-size: 18px; color: #1a5fb4; font-weight: 500;">What sounds more natural?</p>
         <p style="font-size: 26px; line-height: 1.35;">${t.sentence}</p>
         <div style="display:flex; justify-content:space-between; gap: 30px; margin-top: 25px;">
           <div style="flex:1; border:1px solid #ccc; padding:16px; border-radius:10px;">
@@ -265,7 +265,7 @@ const load_recall_high_load_only = {
       return t.load === "high" && t.load_number != null;
     }
   };
-  
+
 // Comprehension check (drawn from CHECKS in longshort-stims.js when flagged)
 const comprehension_trial = {
   type: jsPsychHtmlKeyboardResponse,
@@ -274,7 +274,7 @@ const comprehension_trial = {
     return `
       <div style="max-width: 900px;">
         <p style="font-size: 24px;">${t.comp_check_question}</p>
-        <p style="font-size: 16px; color: #666;">
+        <p style="font-size: 18px; color: #666;">
           <strong>F</strong> = True &nbsp;&nbsp;&nbsp; <strong>J</strong> = False
         </p>
       </div>
