@@ -126,9 +126,10 @@ selectedTrials = shuffle(selectedTrials); // fully random order
 
 // -------------------- PRACTICE (1-time tutorial) --------------------
 const practiceItem = PRACTICE_QUESTION?.[0];
+const practiceFlip = coinFlip(0.5);
 
 function buildPracticeTrial(loadType) {
-  const flip = coinFlip(0.5);
+  const flip = practiceFlip;
   const left = flip ? practiceItem.long_word : practiceItem.short_word;
   const right = flip ? practiceItem.short_word : practiceItem.long_word;
 
