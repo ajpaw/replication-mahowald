@@ -276,3 +276,13 @@ const CHECKS = [
   {"question": "Minors are not allowed to vote", "correct_answer":"F"},
   {"question": "Dentists specialize in tooth issues", "correct_answer":"F"}
 ]
+
+const PRACTICE_QUESTION = [
+  {
+    "short_word": "uni",
+    "long_word": "university",
+    "supportive_context": "Pranking fellow students in libraries was the best part of",
+    "neutral_context": "The city council really wants to build a brand new",
+    "comprehension_question": ""
+  }
+]

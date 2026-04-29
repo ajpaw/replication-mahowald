@@ -124,6 +124,71 @@ for (const cell of CELLS) {
 
 selectedTrials = shuffle(selectedTrials); // fully random order
 
+// -------------------- PRACTICE (1-time tutorial) --------------------
+const practiceItem = PRACTICE_QUESTION?.[0];
+
+function buildPracticeTrial(loadType) {
+  const flip = coinFlip(0.5);
+  const left = flip ? practiceItem.long_word : practiceItem.short_word;
+  const right = flip ? practiceItem.short_word : practiceItem.long_word;
+
+  return {
+    trial_kind: "practice_completion",
+    context: "supportive", // use supportive sentence for practice
+    load: loadType,        // "low" then "high"
+    short_word: practiceItem.short_word,
+    long_word: practiceItem.long_word,
+    sentence: practiceItem.supportive_context,
+    left_option: left,
+    right_option: right,
+    options_flipped: flip,
+    ask_comprehension: false,      // no comprehension in tutorial
+    comp_check_question: "",
+    comp_check_correct_key: "",
+    load_number: loadType === "high" ? makeDigits(HIGH_LOAD_N_DIGITS) : null
+  };
+}
+
+const practiceTrials = practiceItem
+  ? [buildPracticeTrial("low"), buildPracticeTrial("high")]
+  : [];
+
+const practice_intro = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: `
+    <div style="max-width: 800px;">
+      <h2>Practice</h2>
+      <p>You will now do 2 short practice trials. For this practice round, both trials will use the same sentence.</p>
+      <p>Press <strong>Space</strong> to start practice.</p>
+    </div>
+  `,
+  choices: [" "]
+};
+
+const practice_procedure = {
+  timeline: [
+    fixation,
+    load_number_high_load_only,
+    completion_trial,
+    load_recall_high_load_only
+  ],
+  timeline_variables: practiceTrials.map(t => ({ t })),
+  randomize_order: false // forces low-load first, high-load second
+};
+
+const practice_to_main = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: `
+    <div style="max-width: 800px;">
+      <h2>Practice Complete</h2>
+      <p>You are now starting the actual experiment.</p>
+      <p>Press <strong>Space</strong> to continue.</p>
+    </div>
+  `,
+  choices: [" "]
+};
+
+
 // -------------------- TRIAL DEFINITIONS --------------------
 const welcome = {
   type: jsPsychHtmlKeyboardResponse,
@@ -344,4 +409,4 @@ const debrief = {
   choices: [" "]
 };
 
-jsPsych.run([welcome, trial_procedure, debrief, save_data]);
+jsPsych.run([welcome, practice_intro, practice_procedure, practice_to_main, trial_procedure, debrief, save_data]);
