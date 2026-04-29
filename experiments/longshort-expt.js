@@ -43,6 +43,14 @@ function coinFlip(pTrue = 0.5) {
   return Math.random() < pTrue;
 }
 
+/** Random question picked from CHECKS (longshort-stims.js); F = true, J = false. */
+function sampleComprehensionCheck() {
+  const row = jsPsych.randomization.sampleWithReplacement(CHECKS, 1)[0];
+  const key = String(row.correct_answer ?? row.answer ?? "")
+    .trim()
+    .toLowerCase();
+  return { question: row.question, correct_key: key };
+}
 // Build trial objects for one cell, ensuring unique items overall
 function pickTrialsForCell(remainingItems, cell, n) {
   const picked = sampleWithoutReplacement(remainingItems, n);
@@ -68,20 +76,30 @@ function pickTrialsForCell(remainingItems, cell, n) {
       ? makeDigits(HIGH_LOAD_N_DIGITS)
       : null;
 
+    const ask_comprehension = coinFlip(COMPREHENSION_RATE);
+    let comp_check_question = "";
+    let comp_check_correct_key = "";
+    if (ask_comprehension && Array.isArray(CHECKS) && CHECKS.length) {
+      const check = sampleComprehensionCheck();
+      comp_check_question = check.question;
+      comp_check_correct_key = check.correct_key;
+    }
+
     return {
-      trial_kind: "completion",
-      context: cell.context,            // supportive / neutral
-      load: cell.load,                  // high / low
-      short_word: item.short_word,
-      long_word: item.long_word,
-      sentence: contextText,
-      left_option: left,
-      right_option: right,
-      options_flipped: flip,
-      comprehension_question: item.comprehension_question || "",
-      ask_comprehension: coinFlip(COMPREHENSION_RATE),
-      load_number: correct_load_answer
-    };
+        trial_kind: "completion",
+        context: cell.context,
+        load: cell.load,
+        short_word: item.short_word,
+        long_word: item.long_word,
+        sentence: contextText,
+        left_option: left,
+        right_option: right,
+        options_flipped: flip,
+        ask_comprehension,
+        comp_check_question,
+        comp_check_correct_key,
+        load_number: correct_load_answer
+      };
   });
 
   return { trials, remaining: newRemaining };
@@ -247,16 +265,17 @@ const load_recall_high_load_only = {
       return t.load === "high" && t.load_number != null;
     }
   };
-// Comprehension question (optional per trial)
+  
+// Comprehension check (drawn from CHECKS in longshort-stims.js when flagged)
 const comprehension_trial = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: () => {
     const t = jsPsych.evaluateTimelineVariable("t");
     return `
       <div style="max-width: 900px;">
-        <p style="font-size: 24px;">${t.comprehension_question}</p>
+        <p style="font-size: 24px;">${t.comp_check_question}</p>
         <p style="font-size: 16px; color: #666;">
-          <strong>F</strong> = Yes &nbsp;&nbsp;&nbsp; <strong>J</strong> = No
+          <strong>F</strong> = True &nbsp;&nbsp;&nbsp; <strong>J</strong> = False
         </p>
       </div>
     `;
@@ -270,24 +289,28 @@ const comprehension_trial = {
       load: t.load,
       short_word: t.short_word,
       long_word: t.long_word,
-      comprehension_question: t.comprehension_question
+      comp_check_question: t.comp_check_question,
+      comp_check_correct_key: t.comp_check_correct_key
     };
   },
   on_finish: (data) => {
-    data.comp_answer = data.response === "f" ? "yes" : "no";
-  },
-
+    const t = jsPsych.evaluateTimelineVariable("t");
+    data.comp_answer = data.response === "f" ? "true" : "false";
+    data.comprehension_correct =
+      data.response === t.comp_check_correct_key;
+  }
 };
 const comprehension_if_flagged = {
-    timeline: [comprehension_trial],
-    conditional_function: () => {
-      const t = jsPsych.evaluateTimelineVariable("t");
-      return (
-        t.ask_comprehension &&
-        String(t.comprehension_question || "").trim().length > 0
-      );
-    }
-  };
+  timeline: [comprehension_trial],
+  conditional_function: () => {
+    const t = jsPsych.evaluateTimelineVariable("t");
+    return (
+      t.ask_comprehension &&
+      String(t.comp_check_question || "").trim().length > 0 &&
+      (t.comp_check_correct_key === "f" || t.comp_check_correct_key === "j")
+    );
+  }
+};
 // -------------------- TIMELINE --------------------
 const trial_procedure = {
   timeline: [

@@ -267,3 +267,12 @@ const STIMULI = [
     }
   ];
   
+const CHECKS = [
+  {"question": "Donald Trump is the current Prime Minister of Italy" , "correct_answer":"J"},
+  {"question": "Some cars run on olive oil" , "correct_answer":"J"},
+  {"question": "Cows can fly" , "correct_answer":"J"},    
+  {"question": "All humans have red hair", "correct_answer":"J"},
+  {"question": "Butter is a dairy product", "correct_answer":"F"},          
+  {"question": "Minors are not allowed to vote", "correct_answer":"F"},
+  {"question": "Dentists specialize in tooth issues", "correct_answer":"F"}
+]
