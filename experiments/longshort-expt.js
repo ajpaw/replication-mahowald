@@ -172,7 +172,7 @@ const practice_to_main = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
     <div style="max-width: 800px;">
-      <h2>Practice Complete</h2>
+      <h2 style="color: #1a5fb4;">Practice Complete</h2>
       <p>You are now starting the actual experiment.</p>
       <p>Press <strong>Space</strong> to continue.</p>
     </div>
