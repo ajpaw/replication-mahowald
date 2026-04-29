@@ -206,16 +206,7 @@ const fixation = {
   data: { task: "fixation" }
 };
 
-const practice_procedure = {
-  timeline: [
-    fixation,
-    load_number_high_load_only,
-    completion_trial,
-    load_recall_high_load_only
-  ],
-  timeline_variables: practiceTrials.map(t => ({ t })),
-  randomize_order: false // forces low-load first, high-load second
-};
+
 // Number screen for high-load trials only
 const load_number_screen = {
   type: jsPsychHtmlKeyboardResponse,
@@ -378,6 +369,16 @@ const comprehension_if_flagged = {
   }
 };
 // -------------------- TIMELINE --------------------
+const practice_procedure = {
+  timeline: [
+    fixation,
+    load_number_high_load_only,
+    completion_trial,
+    load_recall_high_load_only
+  ],
+  timeline_variables: practiceTrials.map(t => ({ t })),
+  randomize_order: false // forces low-load first, high-load second
+};
 const trial_procedure = {
   timeline: [
         fixation,
