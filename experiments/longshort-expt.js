@@ -189,20 +189,21 @@ const welcomeScreen = {
       <h2>Welcome</h2>
       <p>Thank you for your interest in this experiment! This should take about 10 minutes.</p>
       <p>This study will ask you to perform tasks involving reading short sentences.</p>
-        "<div class='consent'>" +
-          "<p>By clicking below, you are agreeing to take part in a study being conducted by cognitive scientists in the <b>Department of Psychology at Stanford University</b>. If you have questions about this research, please contact us at <a href='mailto:cogtoolslab.requester@gmail.com?subject=Story Listening Study'>cogtoolslab.requester@gmail.com</a>. We will do our best to respond promptly and professionally.</p>" +
-          '<ul>' +
-          '<li>You must be at least 18 years old to participate.</li>' +
-          '<li>Your participation is voluntary.</li>' +
-          '<li>You may decline to answer any question or stop the study at any time without penalty.</li>' +
-          '<li>Your responses are anonymous and will be analyzed only in aggregate form.</li>' +
-          '</ul>' +
-          '</div></div>' +
-          '<p>Do you consent to participate in this study as described above?</p>' +
-          '</div>'
+
+      <div class="consent">
+        <p>
+          By clicking below, you are agreeing to take part in a study being conducted at Stanford University.
+        </p>
+        <ul>
+          <li>You must be at least 18 years old to participate.</li>
+          <li>Your participation is voluntary.</li>
+          <li>You may choose to stop the study at any time without penalty.</li>
+          <li>Your responses are fully anonymous and will be analyzed only in aggregate form.</li>
+        </ul>
+      </div>
+      <p>Do you consent to participate in this study as described above?</p>
     </div>
   `,
-  
   choices: ['Yes, I agree to participate'],
   margin_vertical: '30px',
   data: { task: 'consent' },
