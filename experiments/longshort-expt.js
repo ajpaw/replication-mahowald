@@ -182,21 +182,58 @@ const practice_to_main = {
 
 
 // -------------------- TRIAL DEFINITIONS --------------------
-const welcome = {
-  type: jsPsychHtmlKeyboardResponse,
+const welcomeScreen = {
+  type: jsPsychHtmlButtonResponse,
   stimulus: `
-    <div style="max-width: 800px;">
+    <div class="instructions">
       <h2>Welcome</h2>
-      <p>You will read a sentence and choose which completion sounds more natural.</p>
-      <p>Press <strong>F</strong> for the left option, <strong>J</strong> for the right option.</p>
-      <p>On some trials, you will briefly see a number and will later be asked to type it.</p>
-      <p>Press <strong>Space</strong> to begin.</p>
-      <p style="font-size: 14px; line-height: 1.4; color: #555; margin-top: 1em;">
-        Note to Bran/whoever is reading this: The prototype is ready to run with stims constructed from scratch. Might also make a few refinements (instructions/time durations)!
-      </p>
+      <p>Thank you for your interest in this experiment! This should take about 10 minutes.</p>
+      <p>This study will ask you to perform tasks involving reading short sentences.</p>
+        "<div class='consent'>" +
+          "<p>By clicking below, you are agreeing to take part in a study being conducted by cognitive scientists in the <b>Department of Psychology at Stanford University</b>. If you have questions about this research, please contact us at <a href='mailto:cogtoolslab.requester@gmail.com?subject=Story Listening Study'>cogtoolslab.requester@gmail.com</a>. We will do our best to respond promptly and professionally.</p>" +
+          '<ul>' +
+          '<li>You must be at least 18 years old to participate.</li>' +
+          '<li>Your participation is voluntary.</li>' +
+          '<li>You may decline to answer any question or stop the study at any time without penalty.</li>' +
+          '<li>Your responses are anonymous and will be analyzed only in aggregate form.</li>' +
+          '</ul>' +
+          '</div></div>' +
+          '<p>Do you consent to participate in this study as described above?</p>' +
+          '</div>'
     </div>
   `,
-  choices: [" "]
+  
+  choices: ['Yes, I agree to participate'],
+  margin_vertical: '30px',
+  data: { task: 'consent' },
+  on_finish: function () {
+    var element = document.documentElement;
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    }
+  }
+  };
+
+const instructionsScreen = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: `
+    <div class="instructions">
+      <h2>Instructions</h2>
+      <p>You will see a sentence with two possible endings shown side by side. You will pick a completion that sounds most natural to YOU (there is no right answer!)</p>
+      <p>Press <strong>F</strong> for the left option, <strong>J</strong> for the right option.</p>
+      <p>On some trials you will briefly see a number that you will need to memorize; later you will be asked to type it.</p>
+      <p>Coming up, is some practice.</p>
+      <p>Press <strong>Space</strong> to continue.</p>
+    </div>
+  `,
+  choices: [" "],
+  data: { task: "instructions" }
 };
 
 const fixation = {
@@ -412,4 +449,4 @@ const debrief = {
   choices: [" "]
 };
 
-jsPsych.run([welcome, practice_intro, practice_procedure, practice_to_main, trial_procedure, debrief, save_data]);
+jsPsych.run([welcomeScreen, instructionsScreen, practice_intro, practice_procedure, practice_to_main, trial_procedure, debrief, save_data]);
