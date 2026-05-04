@@ -1,8 +1,8 @@
 
 const jsPsych = initJsPsych({
-  on_finish: () => {
-    jsPsych.data.displayData("csv");
-  }
+  //on_finish: () => {
+  //  jsPsych.data.displayData("csv");
+  //}
 });
 
 const subject_id = jsPsych.randomization.randomID(10);
