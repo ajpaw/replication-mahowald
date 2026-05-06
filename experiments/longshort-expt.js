@@ -18,7 +18,7 @@ const save_data = {
 
 // -------------------- PARAMETERS --------------------
 const N_PER_CELL = 1;                 // x per each of 4 types
-const COMPREHENSION_RATE = 0.30;      // “every once in a while”
+const COMPREHENSION_RATE = 0.25;      // “every once in a while”
 const HIGH_LOAD_N_DIGITS = 6;         // number length for high load
 const LOW_LOAD_N_DIGITS = 0;          // low load: no number screen
 const FIXATION_MS = 300;
@@ -410,7 +410,7 @@ const comprehension_if_flagged = {
 // -------------------- TIMELINE --------------------
 const practice_procedure = {
   timeline: [
-    fixation,
+    //fixation,
     load_number_high_load_only,
     completion_trial,
     load_recall_high_load_only
@@ -418,9 +418,11 @@ const practice_procedure = {
   timeline_variables: practiceTrials.map(t => ({ t })),
   randomize_order: false // forces low-load first, high-load second
 };
+
+
 const trial_procedure = {
   timeline: [
-        fixation,
+        //fixation,
         load_number_high_load_only,
         completion_trial,
         load_recall_high_load_only,
