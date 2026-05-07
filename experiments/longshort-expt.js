@@ -1,8 +1,8 @@
+var jsPsych = initJsPsych({
+  show_progress_bar: true,
+  message_progress_bar: "SESSION PROGRESS",
+  auto_update_progress_bar: false,
 
-const jsPsych = initJsPsych({
-  //on_finish: () => {
-  //  jsPsych.data.displayData("csv");
-  //}
 });
 
 const subject_id = jsPsych.randomization.randomID(10);
@@ -22,6 +22,7 @@ const COMPREHENSION_RATE = 0.25;      // “every once in a while”
 const HIGH_LOAD_N_DIGITS = 6;         // number length for high load
 const LOW_LOAD_N_DIGITS = 0;          // low load: no number screen
 const FIXATION_MS = 300;
+const TOTAL_TRIALS = 4 * N_PER_CELL + 2;
 
 // -------------------- HELPERS --------------------
 function makeDigits(n) {
@@ -207,6 +208,9 @@ const welcomeScreen = {
   choices: ['Yes, I agree to participate'],
   margin_vertical: '30px',
   data: { task: 'consent' },
+  on_start: function () {
+    jsPsych.progressBar.progress = 0;
+  },
   on_finish: function () {
     var element = document.documentElement;
     if (element.requestFullscreen) {
@@ -325,6 +329,7 @@ const completion_trial = {
     data.chosen_word = data.response === "f" ? data.left_option : data.right_option;
     data.chose_short = data.chosen_word === data.short_word;
     data.chose_long = data.chosen_word === data.long_word;
+    jsPsych.progressBar.progress =  jsPsych.progressBar.progress + (1/TOTAL_TRIALS);
   }
 };
 
@@ -350,6 +355,7 @@ const load_recall = {
     const resp = data.response?.recall ?? "";
     data.recalled_number = String(resp).trim();
     data.load_correct = data.recalled_number === String(t.load_number);
+
   },
 
 };
@@ -407,6 +413,31 @@ const comprehension_if_flagged = {
     );
   }
 };
+
+let sentenceCounter = 0;
+
+const separator = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: () => {
+    var n = sentenceCounter++;
+    return `<div style="font-size:25px; font-weight:600;">
+      You are now looking at main trial # ${n}
+    </div>`;
+  },
+  choices: "NO_KEYS",
+  trial_duration: 1000,
+  data: () => ({
+    event: "separator",
+    sent_num: jsPsych.timelineVariable('sent_num'),
+    sentence: jsPsych.timelineVariable('t').sentence ?? null
+  }),
+  on_start: () => { document.body.style.backgroundColor = "#e4ffde"; },
+  on_finish: () => { document.body.style.backgroundColor = ""; }
+};
+
+
+
+
 // -------------------- TIMELINE --------------------
 const practice_procedure = {
   timeline: [
@@ -423,12 +454,14 @@ const practice_procedure = {
 const trial_procedure = {
   timeline: [
         //fixation,
+        separator,
         load_number_high_load_only,
         completion_trial,
         load_recall_high_load_only,
         comprehension_if_flagged
       ],
-  timeline_variables: selectedTrials.map(t => ({ t })),
+  //timeline_variables: selectedTrials.map(t => ({ t })),
+  timeline_variables: selectedTrials.map((t, i) => ({ t, sent_num: i + 1 })),
   randomize_order: true
 };
 
