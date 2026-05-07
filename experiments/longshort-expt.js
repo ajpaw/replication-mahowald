@@ -17,7 +17,7 @@ const save_data = {
               };
 
 // -------------------- PARAMETERS --------------------
-const N_PER_CELL = 1;                 // x per each of 4 types
+const N_PER_CELL = 5;                 // x per each of 4 types
 const COMPREHENSION_RATE = 0.95;      // 0.2 “every once in a while”
 const HIGH_LOAD_N_DIGITS = 6;         // number length for high load
 const LOW_LOAD_N_DIGITS = 0;          // low load: no number screen
@@ -433,11 +433,11 @@ const separator = {
     sentenceCounter+=1;
     var n = sentenceCounter;
     return `<div style="font-size:25px; font-weight:600;">
-      You are now starting trial # ${n}
+      Hit SPACE to move on to trial # ${n}!
     </div>`;
   },
-  choices: "NO_KEYS",
-  trial_duration: 2500,
+  choices: [" "],
+  //trial_duration: 2500,
   data: () => ({
     event: "separator",
     sent_num: jsPsych.timelineVariable('sent_num'),
