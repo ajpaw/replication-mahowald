@@ -18,7 +18,7 @@ const save_data = {
 
 // -------------------- PARAMETERS --------------------
 const N_PER_CELL = 1;                 // x per each of 4 types
-const COMPREHENSION_RATE = 0.25;      // “every once in a while”
+const COMPREHENSION_RATE = 0.95;      // 0.2 “every once in a while”
 const HIGH_LOAD_N_DIGITS = 6;         // number length for high load
 const LOW_LOAD_N_DIGITS = 0;          // low load: no number screen
 const FIXATION_MS = 300;
@@ -232,9 +232,10 @@ const instructionsScreen = {
       <h2>Instructions</h2>
       <p>You will see a sentence with two possible endings shown side by side. You will pick a completion that sounds most natural to YOU (there is no right answer!)</p>
       <p>Press <strong>F</strong> for the left option, <strong>J</strong> for the right option.</p>
-      <p>On some trials you will briefly see a number that you will need to memorize; later you will be asked to type it.</p>
+      <p>(1) On <strong>some</strong> trials you will briefly see a number that you will need to memorize; later you will be asked to recall it.</p>
+      <p>(2) On other trials you will simply answer the question.</p>
       <p>Coming up, is some practice.</p>
-      <p>Press <strong>Space</strong> to continue.</p>
+      <p>Press SPACE to continue.</p>
     </div>
   `,
   choices: [" "],
@@ -375,10 +376,20 @@ const comprehension_trial = {
     const t = jsPsych.evaluateTimelineVariable("t");
     return `
       <div style="max-width: 900px;">
-        <p style="font-size: 24px;">${t.comp_check_question}</p>
-        <p style="font-size: 18px; color: #666;">
-          <strong>F</strong> = True &nbsp;&nbsp;&nbsp; <strong>J</strong> = False
+        <p style="margin:0 0 12px; font-size: 18px; color: #1a5fb4; font-weight: 500;">
+          True or false?
         </p>
+        <p style="font-size: 26px; line-height: 1.35;">${t.comp_check_question}</p>
+        <div style="display:flex; justify-content:space-between; gap: 30px; margin-top: 25px;">
+          <div style="flex:1; border:1px solid #ccc; padding:16px; border-radius:10px;">
+            <p style="margin:0; font-size: 18px; color:#666;"><strong>F</strong></p>
+            <p style="margin:8px 0 0; font-size: 28px;"><strong>True</strong></p>
+          </div>
+          <div style="flex:1; border:1px solid #ccc; padding:16px; border-radius:10px;">
+            <p style="margin:0; font-size: 18px; color:#666;"><strong>J</strong></p>
+            <p style="margin:8px 0 0; font-size: 28px;"><strong>False</strong></p>
+          </div>
+        </div>
       </div>
     `;
   },
@@ -419,29 +430,43 @@ let sentenceCounter = 0;
 const separator = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: () => {
-    var n = sentenceCounter++;
+    sentenceCounter+=1;
+    var n = sentenceCounter;
     return `<div style="font-size:25px; font-weight:600;">
-      You are now looking at main trial # ${n}
+      You are now starting trial # ${n}
     </div>`;
   },
   choices: "NO_KEYS",
-  trial_duration: 1000,
+  trial_duration: 2500,
   data: () => ({
     event: "separator",
     sent_num: jsPsych.timelineVariable('sent_num'),
     sentence: jsPsych.timelineVariable('t').sentence ?? null
   }),
-  on_start: () => { document.body.style.backgroundColor = "#e4ffde"; },
+  on_start: () => { document.body.style.backgroundColor = "#D6E8FF"; },
   on_finish: () => { document.body.style.backgroundColor = ""; }
 };
 
 
+const practice_separator = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: () => {
+    return `<div style="font-size:25px; font-weight:600;">
+      Here is a type of task you might encounter  
+    </div>`;
+  },
+  choices: "NO_KEYS",
+  trial_duration: 3000,
+  on_start: () => { document.body.style.backgroundColor = "#D6E8FF"; },
+  on_finish: () => { document.body.style.backgroundColor = ""; }
+};
 
 
 // -------------------- TIMELINE --------------------
 const practice_procedure = {
   timeline: [
     //fixation,
+    practice_separator,
     load_number_high_load_only,
     completion_trial,
     load_recall_high_load_only
