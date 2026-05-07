@@ -432,6 +432,46 @@ const trial_procedure = {
   randomize_order: true
 };
 
+const post_expt_survey = {
+  type: jsPsychSurvey,
+  survey_json:{
+    showQuestionNumbers: false,
+    elements: [
+      {
+        type: "text",
+        name: "problems",
+        title: "Any problems/overall thoughts on the experiment that you would like to share?",
+        placeholder: "Enter here",
+        required: false
+      },
+      {
+        type: "text",
+        name: "languages",
+        title: "Do you speak any other languages (other than English) fluently?",
+        placeholder: "Enter language(s) as comma separated values",
+        required: false
+      },
+      {
+        type: "radiogroup",
+        name: "gender",
+        title: "How do you describe your gender identity?",
+        choices: ['Woman', 'Man', 'Trans Man', 'Trans Woman', 'Non-binary', 'Prefer not to say', 
+        'None of the above'],
+        required: false
+      },
+      {
+        type: "radiogroup",
+        name: "education",
+        title: "What is the highest level of education you have completed (or are currently pursuing)?",
+        choices: ['Middle school', 'High school', 'Vocational training', 'Bachelors', 'Associate', 'Masters', 'Doctorate','Professional degree' ,'Prefer not to say', 
+        'None of the above'],
+        required: false
+      },
+    ]
+  }
+
+}
+
 const debrief = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: () => {
@@ -452,4 +492,4 @@ const debrief = {
   choices: [" "]
 };
 
-jsPsych.run([welcomeScreen, instructionsScreen, practice_intro, practice_procedure, practice_to_main, trial_procedure, debrief, save_data]);
+jsPsych.run([welcomeScreen, instructionsScreen, practice_intro, practice_procedure, practice_to_main, trial_procedure, post_expt_survey,debrief, save_data]);
