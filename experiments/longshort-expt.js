@@ -314,6 +314,7 @@ const completion_trial = {
     const t = jsPsych.evaluateTimelineVariable("t");
     return {
       task: "completion",
+      trial_kind: t.trial_kind,
       context: t.context,
       load: t.load,
       short_word: t.short_word,
