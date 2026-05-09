@@ -188,7 +188,7 @@ const welcomeScreen = {
   stimulus: `
     <div class="instructions">
       <h2>Welcome</h2>
-      <p>Thank you for your interest in this experiment! This should take about 10 minutes.</p>
+      <p>Thank you for your interest in this experiment! This should take about 8 minutes.</p>
       <p>This study will ask you to perform tasks involving reading short sentences.</p>
 
       <div class="consent">
