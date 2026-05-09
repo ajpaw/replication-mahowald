@@ -78,6 +78,8 @@ You can comment this section out prior to final report with data collection.
 
 
 ## Results
+Here is a visualization from Pilot A run with members of the Stanford community (N=2). Each participant was shown 5 trials per category in a randomized order. So, each participant was shown 20 trials in total.
+![Performance by condition](data/pilotA-dataviz.png){#fig-performance width=90% fig-align="center"}
 
 
 ### Data preparation
