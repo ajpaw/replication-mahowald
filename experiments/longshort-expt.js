@@ -338,7 +338,7 @@ const completion_trial = {
 const load_recall = {
   type: jsPsychSurveyText,
   questions: [
-    { prompt: "Type the number you saw and press ENTER", name: "recall", required: true }
+    { prompt: "Type in the number you saw earlier", name: "recall", required: true }
   ],
   data: () => {
     const t = jsPsych.evaluateTimelineVariable("t");
@@ -550,4 +550,4 @@ const debrief = {
   choices: [" "]
 };
 
-jsPsych.run([welcomeScreen, instructionsScreen, practice_intro, practice_procedure, practice_to_main, trial_procedure, post_expt_survey,debrief, save_data]);
+jsPsych.run([welcomeScreen, instructionsScreen, practice_intro, practice_procedure, practice_to_main, trial_procedure, post_expt_survey, save_data,debrief]);
