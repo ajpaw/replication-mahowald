@@ -226,15 +226,26 @@ const practice_to_main = {
 };
 
 
+
+
+
+
 // -------------------- TRIAL DEFINITIONS --------------------
 const welcomeScreen = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
     <div class="instructions">
       <h2>Welcome</h2>
-      <p>Thank you for your interest in this experiment! This should take about 8 minutes.</p>
+      <p>Thank you for your interest in this experiment! This should take about 8 minutes or less.</p>
       <p>This study will ask you to perform tasks involving reading short sentences.</p>
-
+      <h3>Consent agreement: Terms and Conditions</h3>
+      <p style="font-size: 14px;">This research is conducted through the Prolific platform that has active users from the US, UK, and Canada.
+      Study data will be stored securely in compliance with Stanford University standards, minimizing the risk of confidentiality breach. We cannot and do not guarantee or promise that you will receive any benefits from this study.
+      You will receive payment as advertised on Prolific. If you do not complete this study, you will receive prorated payment based on the time that you have spent. 
+      If you have read this form and have decided to participate in this project, please understand your participation is voluntary and you have the right to withdraw your consent or discontinue participation at any time without penalty or loss of benefits to which you are otherwise entitled.
+      The results of this research study may be presented at professional meetings or published in scientific journals. Your individual privacy will be maintained in all published and written data resulting from the study. In accordance with scientific norms, the data from this study may be used or shared with other researchers for future research (after removing personally identifying information) without additional consent from you.  
+      If you have any questions, concerns or complaints about this research, its procedures, risks and benefits, contact the Protocol Director, Robert Hawkins (<a href="mailto:rdhawkins@stanford.edu">rdhawkins@stanford.edu</a>). If you are not satisfied with how this study is being conducted, or if you have any concerns, complaints, or general questions about the research or your rights as a participant, please contact the Stanford Institutional Review Board (IRB) to speak to someone independent of the research team at 650-723-2480 or toll free at 1-866-680-2906, or email at irbnonmed@stanford.edu. You can also write to the Stanford IRB, Stanford University, 1705 El Camino Real, Palo Alto, CA 94306. Please save or print a copy of this page for your records.
+      </p>
       <div class="consent">
         <p>
           By clicking below, you are agreeing to take part in a study being conducted at Stanford University.
