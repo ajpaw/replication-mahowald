@@ -5,6 +5,50 @@ var jsPsych = initJsPsych({
 
 });
 
+const prolific_pid = jsPsych.data.getURLVariable("PROLIFIC_PID") ?? "";
+const prolific_study_id = jsPsych.data.getURLVariable("STUDY_ID") ?? "";
+const prolific_session_id = jsPsych.data.getURLVariable("SESSION_ID") ?? "";
+const now = new Date();
+
+// Human-readable in Pacific (locale + timezone)
+const started_at_pacific = now.toLocaleString("en-US", {
+  timeZone: "America/Los_Angeles",
+  weekday: "short",
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: true,
+  timeZoneName: "shortGeneric"
+});
+
+// Optional: fixed-offset style for logs (includes offset, e.g. -08:00 / -07:00)
+const started_at_pacific_iso = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "America/Los_Angeles",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false,
+  timeZoneName: "shortOffset"
+}).format(now);
+
+jsPsych.data.addProperties({
+  started_at_pacific,
+  started_at_pacific_iso
+});
+
+jsPsych.data.addProperties({
+  prolific_pid,
+  prolific_study_id,
+  prolific_session_id,
+  url_query: window.location.search || ""
+});
+
 const subject_id = jsPsych.randomization.randomID(10);
 const filename = `${subject_id}.csv`;
 
