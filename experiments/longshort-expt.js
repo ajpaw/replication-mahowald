@@ -237,7 +237,7 @@ const welcomeScreen = {
     <div class="instructions">
       <h2>Welcome</h2>
       <p>Thank you for your interest in this experiment! This should take about 8 minutes or less.</p>
-      <p>This study will ask you to perform tasks involving reading short sentences.</p>
+      <p>This study will ask you to perform tasks involving reading short sentences and responding to questions about them.</p>
       <h3>Consent agreement: Terms and Conditions</h3>
       <p style="font-size: 14px;">This research is conducted through the Prolific platform that has active users from the US, UK, and Canada.
       Study data will be stored securely in compliance with Stanford University standards, minimizing the risk of confidentiality breach. We cannot and do not guarantee or promise that you will receive any benefits from this study.
