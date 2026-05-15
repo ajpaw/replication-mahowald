@@ -62,7 +62,7 @@ const save_data = {
 
 // -------------------- PARAMETERS --------------------
 const N_PER_CELL = 5;                 // x per each of 4 types
-const COMPREHENSION_RATE = 0.2;      // 0.2 “every once in a while”
+const COMPREHENSION_RATE = 0.9;      // 0.2 “every once in a while”
 const HIGH_LOAD_N_DIGITS = 6;         // number length for high load
 const LOW_LOAD_N_DIGITS = 0;          // low load: no number screen
 const FIXATION_MS = 300;
@@ -431,23 +431,23 @@ const comprehension_trial = {
   stimulus: () => {
     const t = jsPsych.evaluateTimelineVariable("t");
     return `
-      <div style="max-width: 900px;">
-        <p style="margin:0 0 12px; font-size: 18px; color: #1a5fb4; font-weight: 500;">
-          True or false?
-        </p>
-        <p style="font-size: 26px; line-height: 1.35;">${t.comp_check_question}</p>
-        <div style="display:flex; justify-content:space-between; gap: 30px; margin-top: 25px;">
-          <div style="flex:1; border:1px solid #ccc; padding:16px; border-radius:10px;">
-            <p style="margin:0; font-size: 18px; color:#666;"><strong>F</strong></p>
-            <p style="margin:8px 0 0; font-size: 28px;"><strong>True</strong></p>
-          </div>
-          <div style="flex:1; border:1px solid #ccc; padding:16px; border-radius:10px;">
-            <p style="margin:0; font-size: 18px; color:#666;"><strong>J</strong></p>
-            <p style="margin:8px 0 0; font-size: 28px;"><strong>False</strong></p>
-          </div>
+    <div style="max-width: 900px;">
+      <p style="margin:0 0 12px; font-size: 16px; color: #1a5fb4; font-weight: 500;">
+        True or false?
+      </p>
+      <p style="font-size: 24px; line-height: 1.35; font-style: italic;">${t.comp_check_question}</p>
+      <div style="display:flex; justify-content:space-between; gap: 30px; margin-top: 25px;">
+        <div style="flex:1; padding:16px;">
+          <p style="margin:0; font-size: 16px; color:#666;"><strong>F</strong></p>
+          <p style="margin:8px 0 0; font-size: 26px;"><strong>True</strong></p>
+        </div>
+        <div style="flex:1; padding:16px;">
+          <p style="margin:0; font-size: 16px; color:#666;"><strong>J</strong></p>
+          <p style="margin:8px 0 0; font-size: 26px;"><strong>False</strong></p>
         </div>
       </div>
-    `;
+    </div>
+  `;
   },
   choices: ["f", "j"],
   data: () => {
