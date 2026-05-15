@@ -62,7 +62,7 @@ const save_data = {
 
 // -------------------- PARAMETERS --------------------
 const N_PER_CELL = 5;                 // x per each of 4 types
-const COMPREHENSION_RATE = 0.9;      // 0.2 “every once in a while”
+const COMPREHENSION_RATE = 0.2;      // 0.2 “every once in a while”
 const HIGH_LOAD_N_DIGITS = 6;         // number length for high load
 const LOW_LOAD_N_DIGITS = 0;          // low load: no number screen
 const FIXATION_MS = 300;
