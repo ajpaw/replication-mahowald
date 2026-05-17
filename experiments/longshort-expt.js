@@ -588,6 +588,11 @@ const post_expt_survey = {
 
 const debrief = {
   type: jsPsychHtmlKeyboardResponse,
+  on_finish: () => {
+    if (prolific_session_id) {
+      window.location.href = 'https://app.prolific.com/submissions/complete?cc=C5A5XMZS';
+    }
+  },
   stimulus: () => {
     const n = jsPsych.data.get().filter({ task: "completion" }).count();
     const nHigh = jsPsych.data.get().filter({ task: "completion", load: "high" }).count();
